@@ -5,7 +5,6 @@ using UnityEngine;
 
 using Niantic.ARDK.AR;
 using Niantic.ARDK.Utilities;
-using Niantic.ARDK.Utilities.Logging;
 
 using Niantic.ARDK.AR.ARSessionEventArgs;
 using Niantic.ARDK.AR.Configuration;
@@ -24,12 +23,6 @@ public class LayerDetection : MonoBehaviour
 
     public ARSemanticSegmentationManager _semanticManager;
     public Camera _camera;
-
-    IARLogHandler LogHandler;
-    private void Awake()
-    {
-        ARLog.EnableLogFeature("Niantic");
-    }
     void Start()
     {
         //add a callback for catching the updated semantic buffer
@@ -52,9 +45,8 @@ public class LayerDetection : MonoBehaviour
         {
             //list the channels that are available
             Debug.Log("Number of Channels available " + _semanticManager.SemanticBufferProcessor.ChannelCount);
-            foreach (var c in _semanticManager.SemanticBufferProcessor.Channels)
-                Debug.Log(c);
-
+            //foreach (var c in _semanticManager.SemanticBufferProcessor.Channels)
+                //Debug.Log(c);
 
             int x = (int)touch.position.x;
             int y = (int)touch.position.y;

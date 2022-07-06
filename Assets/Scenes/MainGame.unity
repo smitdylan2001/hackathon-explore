@@ -827,6 +827,8 @@ GameObject:
   - component: {fileID: 1789588871}
   - component: {fileID: 1789588868}
   - component: {fileID: 1789588870}
+  - component: {fileID: 1789588876}
+  - component: {fileID: 1789588875}
   m_Layer: 0
   m_Name: ARSceneCamera
   m_TagString: MainCamera
@@ -980,6 +982,39 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1789588875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1789588867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd672b3e02db49ab85146648ba1651e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mode: 0
+  _occludee: {fileID: 0}
+--- !u!114 &1789588876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1789588867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80198c6deee0a4c5c9096accbcac4119, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _manageUsingUnityLifecycle: 1
+  _camera: {fileID: 1789588869}
+  _keyFrameFrequency: 20
+  _interpolation: 2
+  _interpolationPreference: 0.9
+  _occlusionMode: 3
+  _textureFilterMode: 1
 --- !u!1 &1795179870
 GameObject:
   m_ObjectHideFlags: 0
@@ -1009,6 +1044,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 968095f44849daa4cb849b42ab6a8e83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _minigameObjects: []
   _scoreText: {fileID: 442213507}
   _timerText: {fileID: 2140059253}
   _startingSeconds: 90

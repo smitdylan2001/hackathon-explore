@@ -7,13 +7,14 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    [SerializeField] private GameObject[] _minigameObjects;
     [SerializeField] private TextMeshProUGUI _scoreText;
     [SerializeField] private TextMeshProUGUI _timerText;
     [SerializeField] private int _startingSeconds = 60;
 
     int _score = 0;
     float _secondsLeft;
-
+    Transform _cameraTransform;
 
 
     // Start is called before the first frame update
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _secondsLeft = _startingSeconds;
+        _cameraTransform = Camera.main.transform;
     }
 
     // Update is called once per frame
@@ -60,5 +62,17 @@ public class GameManager : MonoBehaviour
         int minutes = Mathf.FloorToInt(_secondsLeft / 60);
 
         _timerText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
+    }
+
+    public void spawnMinigame(Vector3 position)
+    {
+        if (_minigameObjects.Length == 0)
+        {
+            Debug.LogError("No minigames founnd!");
+            return;
+        }
+        var go = Instantiate(_minigameObjects[Random.Range(0, _minigameObjects.Length)]);
+        go.transform.position = position;
+        go.transform.LookAt(_cameraTransform);
     }
 }
