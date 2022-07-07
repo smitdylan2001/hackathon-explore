@@ -4,44 +4,14 @@ using UnityEngine;
 
 public class Minigame4PullDrawer : MonoBehaviour
 {
-    public GameObject realParent;
-    private bool isHoldingObject;
+    public GameObject MinigamePrefab;
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerExit(Collider other)
     {
-        Debug.Log("Ik hou hem vast" + isHoldingObject);
-    }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (Input.GetMouseButton(0))
-        {
-            isHoldingObject = true;
-            Debug.Log("Ik hou het object vast");
-
-        }
-        else
-        {
-            isHoldingObject = false;
-        }
-        
-        if (Input.GetMouseButtonUp(0))
-        {
-            isHoldingObject = false;
-            Debug.Log("Ik hou het object NITvast");
-        }
-
-
-        if (isHoldingObject)
-        {
-            other.transform.parent = this.gameObject.transform;
-        }
-        else
-        {
-            other.transform.parent = realParent.transform;
-        }
-
+        GameManager.Instance.IncreaseScore();
+        Debug.Log("I hit EVERYTHINGs");
+        Destroy(MinigamePrefab);
 
     }
 }

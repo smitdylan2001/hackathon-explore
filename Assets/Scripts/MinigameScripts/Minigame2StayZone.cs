@@ -5,9 +5,10 @@ using UnityEngine;
 public class Minigame2StayZone : MonoBehaviour
 {
 
-    //public int Minigame1Hoops.Seconds;
+
     private bool isInArea;
-    IEnumerator co;
+    public GameObject MinigamePrefab;
+
 
     private void Start()
     {
@@ -20,23 +21,24 @@ public class Minigame2StayZone : MonoBehaviour
     {
         Debug.Log("Ik raak blok aan en" +isInArea);
         isInArea = true;
-        co = ZoneTimer();
-        StartCoroutine(co);
+        StartCoroutine(ZoneTimer());
     }
 
     private void OnTriggerExit(Collider other)
     {
         Debug.Log("Ik raak blok NIET meer aan en" + isInArea);
         isInArea = false;
-        co = ZoneTimer();
-        StopCoroutine(co);
+        StopAllCoroutines();
     }
 
     IEnumerator ZoneTimer()
     {
         yield return new WaitForSeconds(3f);
 
-        if(isInArea)
-        Destroy(this.gameObject);
+        if (isInArea)
+        {
+            //GameManager.Instance.IncreaseScore();
+            Destroy(MinigamePrefab);
+        }
     }
 }
