@@ -21,11 +21,8 @@ public class PlayerScripts : MonoBehaviour
     {
         
         //Minigame 3 mechanics
-<<<<<<< Updated upstream
+
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitCheck, 10f) && hitCheck.transform.CompareTag ("Minigame3"))
-=======
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit hitCheck, 10f) && hitCheck.transform.CompareTag("Minigame3"))
->>>>>>> Stashed changes
         {
             Debug.Log("I hit something");
             Debug.DrawRay(transform.position, transform.forward * hitCheck.distance, Color.red);
