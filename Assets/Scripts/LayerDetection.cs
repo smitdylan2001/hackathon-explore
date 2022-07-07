@@ -17,8 +17,20 @@ using Niantic.ARDK.Utilities.Input.Legacy;
 using UnityEngine.UI;
 using TMPro;
 
+[Flags]
+public enum LayerTypes
+{
+    ground,
+    water,
+    artificial_ground,
+    building,
+    foliage,
+    sky
+}
 public class LayerDetection : MonoBehaviour
 {
+    [SerializeField] LayerTypes layerTypes;
+
     ISemanticBuffer _currentBuffer;
 
     public ARSemanticSegmentationManager _semanticManager;
@@ -45,8 +57,8 @@ public class LayerDetection : MonoBehaviour
         {
             //list the channels that are available
             Debug.Log("Number of Channels available " + _semanticManager.SemanticBufferProcessor.ChannelCount);
-            //foreach (var c in _semanticManager.SemanticBufferProcessor.Channels)
-                //Debug.Log(c);
+            foreach (var c in _semanticManager.SemanticBufferProcessor.Channels)
+                Debug.Log(c);
 
             int x = (int)touch.position.x;
             int y = (int)touch.position.y;

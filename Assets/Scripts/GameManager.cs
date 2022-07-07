@@ -12,9 +12,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _timerText;
     [SerializeField] private int _startingSeconds = 60;
 
-    int _score = 0;
-    float _secondsLeft;
-    Transform _cameraTransform;
+    private int _score = 0;
+    private float _secondsLeft;
+    private Transform _cameraTransform;
 
 
     // Start is called before the first frame update
@@ -48,7 +48,14 @@ public class GameManager : MonoBehaviour
     public void IncreaseScore(int amount = 1)
     {
         _score += amount;
+        AddTime(60);
         UpdateScore();
+    }
+
+    private void AddTime(int seconds)
+    {
+        _secondsLeft += seconds;
+        UpdateTimer();
     }
 
     private void UpdateScore()
@@ -75,4 +82,5 @@ public class GameManager : MonoBehaviour
         go.transform.position = position;
         go.transform.LookAt(_cameraTransform);
     }
+
 }
