@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _scoreText;
     [SerializeField] private TextMeshProUGUI _timerText;
     [SerializeField] private int _startingSeconds = 60;
-    [SerializeField] private float _minDistance = 15;
+    [SerializeField] private float _minDistance = 20;
 
     private int _score = 0;
     private float _secondsLeft;

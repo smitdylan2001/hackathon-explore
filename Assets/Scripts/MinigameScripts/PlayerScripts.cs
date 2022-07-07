@@ -6,29 +6,30 @@ public class PlayerScripts : MonoBehaviour
 {
     public GameObject realParent;
     private bool isHoldingObject;
+    private Camera _cam;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        _cam = Camera.main;
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         //Minigame 3 mechanics
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit hitCheck, 10f) && hitCheck.transform.tag == "Minigame3")
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitCheck, 10f) && hitCheck.transform.CompareTag ("Minigame3"))
         {
             Debug.Log("I hit something");
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitCheck.distance, Color.red);
+            Debug.DrawRay(transform.position, transform.forward * hitCheck.distance, Color.red);
             Destroy(hitCheck.transform.gameObject);
         }
         else
         {
-            Debug.Log("I hit nothing");
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 30f, Color.green);
+            Debug.DrawRay(transform.position, transform.forward * 30f, Color.green);
         }
     }
 
@@ -56,11 +57,11 @@ public class PlayerScripts : MonoBehaviour
 
         if (isHoldingObject)
         {
-            other.transform.parent = this.gameObject.transform;
+            //other.transform.parent = this.gameObject.transform;
         }
         else
         {
-            other.transform.parent = realParent.transform;
+            //other.transform.parent = realParent.transform;
         }
 
 

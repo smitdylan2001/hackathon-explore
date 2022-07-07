@@ -9,8 +9,7 @@ public class Minigame1Hoops : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Ik raak hoop aan");
-        //GameManager.Instance.IncreaseScore();
+        GameManager.Instance.IncreaseScore();
         Destroy(MinigamePrefab);
     }
 }

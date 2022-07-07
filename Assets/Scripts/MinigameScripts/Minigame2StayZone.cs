@@ -37,7 +37,7 @@ public class Minigame2StayZone : MonoBehaviour
 
         if (isInArea)
         {
-            //GameManager.Instance.IncreaseScore();
+            GameManager.Instance.IncreaseScore();
             Destroy(MinigamePrefab);
         }
     }

@@ -10,7 +10,6 @@ public class Minigame4PullDrawer : MonoBehaviour
     {
 
         GameManager.Instance.IncreaseScore();
-        Debug.Log("I hit EVERYTHINGs");
         Destroy(MinigamePrefab);
 
     }
