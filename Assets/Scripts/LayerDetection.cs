@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,19 +16,22 @@ using Niantic.ARDK.Utilities.Input.Legacy;
 using UnityEngine.UI;
 using TMPro;
 
-[Flags]
+[System.Flags]
 public enum LayerTypes
 {
     ground,
-    water,
     artificial_ground,
+    natural_ground,
+    grass,
+    water,
     building,
     foliage,
-    sky
+    sky,
 }
 public class LayerDetection : MonoBehaviour
 {
-    [SerializeField] LayerTypes layerTypes;
+    string[] _layerTypes = { "ground", "water", "artificial_ground", "building", "foliage" };
+    string _currentLayer;
 
     ISemanticBuffer _currentBuffer;
 
@@ -39,6 +41,7 @@ public class LayerDetection : MonoBehaviour
     {
         //add a callback for catching the updated semantic buffer
         _semanticManager.SemanticBufferUpdated += OnSemanticsBufferUpdated;
+        _currentLayer = GetRandomLayer(false);
     }
 
     private void OnSemanticsBufferUpdated(ContextAwarenessStreamUpdatedArgs<ISemanticBuffer> args)
@@ -50,34 +53,42 @@ public class LayerDetection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PlatformAgnosticInput.touchCount <= 0) { return; }
+        if (GameManager.Instance.MinigameActive || PlatformAgnosticInput.touchCount <= 0) return;
 
         var touch = PlatformAgnosticInput.GetTouch(0);
         if (touch.phase == TouchPhase.Began)
         {
-            //list the channels that are available
-            Debug.Log("Number of Channels available " + _semanticManager.SemanticBufferProcessor.ChannelCount);
-            foreach (var c in _semanticManager.SemanticBufferProcessor.Channels)
-                Debug.Log(c);
-
             int x = (int)touch.position.x;
             int y = (int)touch.position.y;
-
-            //return the indices
-            int[] channelsInPixel = _semanticManager.SemanticBufferProcessor.GetChannelIndicesAt(x, y);
-
-            //print them to console
-            foreach (var i in channelsInPixel)
-                Debug.Log(i);
 
             //return the names
             string[] channelsNamesInPixel = _semanticManager.SemanticBufferProcessor.GetChannelNamesAt(x, y);
 
             //print them to console
             foreach (var i in channelsNamesInPixel)
-                Debug.Log("Seen: " + i);
-
+            {
+                Debug.Log(i);
+                if(i == _currentLayer)
+                {
+                    GameManager.Instance.spawnMinigame(_camera.transform.position + (2 * new Vector3(_camera.transform.forward.x, 0, _camera.transform.forward.z)));
+                }
+            }
         }
 
+    }
+
+    public void GotoNextLayer()
+    {
+        _currentLayer = GetRandomLayer();
+    }
+
+    private string GetRandomLayer(bool notCurrent = true)
+    {
+        var layer = _layerTypes[Random.Range(0, _layerTypes.Length)];
+        if (notCurrent && layer == _currentLayer) layer = GetRandomLayer();
+
+        Debug.Log(layer);
+
+        return layer;
     }
 }
