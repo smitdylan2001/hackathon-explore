@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class GameManager : MonoBehaviour
     public bool MinigameActive {get; private set;}
 
     [SerializeField] private GameObject[] _minigameObjects;
+    [SerializeField] private GameObject _completedPrefab;
     [SerializeField] private TextMeshProUGUI _scoreText;
     [SerializeField] private TextMeshProUGUI _timerText;
     [SerializeField] private int _startingSeconds = 60;
@@ -23,6 +25,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] RectTransform _distanceTransform;
     float _distanceOffset;
+    Image _offsetImage;
+
+    Vector3 _lastMinigamePos;
     void Awake()
     {
         Instance = this;
@@ -35,6 +40,7 @@ public class GameManager : MonoBehaviour
         _cameraTransform = Camera.main.transform;
         _layerDetection = FindObjectOfType<LayerDetection>();
         _distanceOffset = _distanceTransform.localScale.y;
+        _offsetImage = _distanceTransform.GetComponentInChildren<Image>();
     }
 
     void FixedUpdate()
@@ -50,20 +56,35 @@ public class GameManager : MonoBehaviour
         }
 
         UpdateTimer();
+        UpdateDistanceMeter();
     }
 
     private void UpdateDistanceMeter()
     {
-        if (!_distanceTransform || previousPositions.Count == 0) return;
-
-        float minDistance = 0;
-        float distance;
-        foreach (var pos in previousPositions)
+        if (!_distanceTransform || previousPositions.Count == 0 || MinigameActive)
         {
-            distance = Vector3.Distance(pos, _cameraTransform.position);
-            minDistance = distance < minDistance ? minDistance : distance;
+            _distanceTransform.localScale = new Vector3(_distanceTransform.localScale.x,
+                                               _distanceOffset,
+                                               _distanceTransform.localScale.z);
+            _offsetImage.color = Color.green;
+            return;
         }
-        _distanceTransform.localScale = new Vector3(_distanceTransform.localScale.x,  (minDistance / _minDistance) * _distanceOffset, _distanceTransform.localScale.z);
+
+        float minDistance = GetMinimumDistance();
+
+        float distancePercent = minDistance / _minDistance;
+
+        _distanceTransform.localScale = new Vector3(_distanceTransform.localScale.x, 
+                                                Mathf.Clamp(distancePercent * _distanceOffset,0, _distanceOffset), 
+                                                _distanceTransform.localScale.z);
+
+
+        _offsetImage.color = Color.Lerp(Color.red, Color.green, distancePercent);
+
+        if(distancePercent > 0.99)
+        {
+            //Enable green checkmark
+        }
     }
     public void IncreaseScore(int amount = 1)
     {
@@ -76,6 +97,7 @@ public class GameManager : MonoBehaviour
 
         AddTime(60);
         UpdateScore();
+        SpawnCompletedNote();
     }
 
     private void AddTime(int seconds)
@@ -107,16 +129,15 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        foreach(var pos in previousPositions)
+        if (GetMinimumDistance() < _minDistance)
         {
-            if(Vector3.Distance(pos, _cameraTransform.position) < 5)
-            {
-                Debug.Log("too close");
 
-                //TODO: Show warning you need to move further?
+            Debug.Log("too close");
 
-                return;
-            }
+            //TODO: Show warning you need to move further?
+
+            return;
+
         }
 
         var go = Instantiate(_minigameObjects[Random.Range(0, _minigameObjects.Length)]);
@@ -124,7 +145,29 @@ public class GameManager : MonoBehaviour
         go.transform.LookAt(_cameraTransform);
 
         previousPositions.Add(position);
+        _lastMinigamePos = position;
 
         MinigameActive = true;
+    }
+
+    private void SpawnCompletedNote()
+    {
+        var go = Instantiate(_completedPrefab);
+        go.transform.position = _lastMinigamePos;
+
+        go.GetComponentInChildren<TextMeshPro>().text = "Completed:\n" + System.DateTime.Now.ToString("t");
+    }
+
+    private float GetMinimumDistance()
+    {
+        float minDistance = float.MaxValue;
+        float distance;
+        foreach (var pos in previousPositions)
+        {
+            distance = Vector3.Distance(pos, _cameraTransform.position);
+            minDistance = distance < minDistance ? distance : minDistance;
+        }
+
+        return minDistance;
     }
 }

@@ -15,7 +15,6 @@ public class Minigame3Laser : MonoBehaviour
         UpdateLine();
     }
 
-    // Update is called once per frame
     void Update()
     {
         UpdateLine();

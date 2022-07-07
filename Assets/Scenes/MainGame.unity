@@ -966,6 +966,8 @@ MonoBehaviour:
   - {fileID: 1487604652411025621, guid: beee03a30e7ada34282580d76ede60f9, type: 3}
   - {fileID: 3387770433976280584, guid: fe47b8b791c571145ad8467a59602e75, type: 3}
   - {fileID: 3890207989941387290, guid: 674580e2bf87f3c47a4868f4e03a3469, type: 3}
+  _completedPrefab: {fileID: 136381442310811197, guid: 337c059f0aa1f19499f6d4eb02a135eb,
+    type: 3}
   _scoreText: {fileID: 442213507}
   _timerText: {fileID: 2140059253}
   _startingSeconds: 90
