@@ -770,7 +770,9 @@ PlayerSettings:
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    Android: 
+    Standalone: ARDK_DEBUG
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
