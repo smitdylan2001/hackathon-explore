@@ -136,6 +136,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2140059253, guid: 3ae49f52734f7cb468e216a8a4cce6e1, type: 3}
+      propertyPath: checkPaddingRequired
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140059253, guid: 3ae49f52734f7cb468e216a8a4cce6e1, type: 3}
+      propertyPath: m_enableWordWrapping
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 295032579462608712, guid: 3ae49f52734f7cb468e216a8a4cce6e1,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[6].m_Target
@@ -256,6 +264,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8954936883052873055, guid: 3ae49f52734f7cb468e216a8a4cce6e1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ae49f52734f7cb468e216a8a4cce6e1, type: 3}
 --- !u!114 &246558812 stripped
@@ -330,7 +343,7 @@ MonoBehaviour:
   RuntimeEnvironment: 0
   _runOptions: -1
   _useWithARNetworkingSession: 0
-  _isLightEstimationEnabled: 0
+  _isLightEstimationEnabled: 1
   _isAutoFocusEnabled: 1
   _worldAlignment: 0
 --- !u!114 &405043693
@@ -387,7 +400,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 405043691}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b019f0c4dd824101a0a664f35dcb7ace, type: 3}
   m_Name: 
@@ -755,7 +768,7 @@ PrefabInstance:
     - target: {fileID: 4544129020768840140, guid: 9f82ecc5afc3c4c2695d9cf37d46f25c,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4544129020768840141, guid: 9f82ecc5afc3c4c2695d9cf37d46f25c,
         type: 3}
@@ -855,7 +868,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _manageUsingUnityLifecycle: 1
   _camera: {fileID: 1789588869}
-  _keyFrameFrequency: 20
+  _keyFrameFrequency: 25
   _depthSuppressionChannels: []
   _interpolation: 2
   _interpolationPreference: 0.9
@@ -1015,7 +1028,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _manageUsingUnityLifecycle: 1
   _camera: {fileID: 1789588869}
-  _keyFrameFrequency: 20
+  _keyFrameFrequency: 25
   _interpolation: 2
   _interpolationPreference: 0.9
   _occlusionMode: 3
@@ -1117,7 +1130,7 @@ MonoBehaviour:
   _instructionText: {fileID: 276097838}
   _promptText: {fileID: 1979891219}
   _endScore: {fileID: 246558812}
-  _startingSeconds: 90
+  _startingSeconds: 120
   _minDistance: 15
   _gameInstruction: 'Minigame: '
   _searchInstruction: 'Find: '

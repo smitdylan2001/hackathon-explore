@@ -7,6 +7,7 @@ using Niantic.ARDK.AR;
 using Niantic.ARDK.AR.Configuration;
 using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
+using Niantic.ARDK.AR.ARSessionEventArgs;
 
 public class GameManager : MonoBehaviour
 {
@@ -35,7 +36,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Image _targetImage;
 
     Vector3 _lastMinigamePos;
-
+    Light _light;
 
     void Awake()
     {
@@ -54,6 +55,24 @@ public class GameManager : MonoBehaviour
         _endPos = _walkingIconEnd.position;
         _gameIcon.gameObject.SetActive(false);
         _timerIncreaseObject.SetActive(false);
+        _light = GameObject.FindObjectOfType<Light>();
+        ARSessionFactory.SessionInitialized += OnAnyARSessionDidInitialize;
+    }
+
+    private void OnAnyARSessionDidInitialize(AnyARSessionInitializedArgs args)
+    {
+        var _session = args.Session;
+        _session.FrameUpdated += UpdateLighting;
+    }
+
+    void UpdateLighting(FrameUpdatedArgs args)
+    {
+        var light = args.Frame.LightEstimate;
+        if (light == null) return;
+        _light.intensity = light.AmbientIntensity;
+        if (Application.platform == RuntimePlatform.Android) _light.color = new Color(light.ColorCorrection[0], light.ColorCorrection[1], light.ColorCorrection[2]);
+        else if (Application.platform == RuntimePlatform.IPhonePlayer) _light.color = Mathf.CorrelatedColorTemperatureToRGB(light.AmbientColorTemperature);
+        else Debug.LogWarning("No platform match, platform is " + Application.platform);
     }
     void FixedUpdate()
     {
@@ -109,7 +128,7 @@ public class GameManager : MonoBehaviour
             _completedIcon.gameObject.SetActive(false);
         }
     }
-    public async void IncreaseScore(int amount = 1)
+    public void IncreaseScore(int amount = 1)
     {
         MinigameActive = false;
         _score += amount;
@@ -123,8 +142,8 @@ public class GameManager : MonoBehaviour
         _timerIncreaseObject.SetActive(false);
         _timerIncreaseObject.SetActive(true);
         _completedIcon.gameObject.SetActive(false);
-
-        await Task.Delay(700);
+        _minDistance++;
+        //await Task.Delay(700);
 
         AddTime(60);
     }
