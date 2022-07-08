@@ -111,6 +111,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MinigamePrefab: {fileID: 3387770433976280584}
+  mat1: {fileID: 2100000, guid: e82df0d53639a5547a148f7ed589cdb4, type: 2}
+  mat2: {fileID: 2100000, guid: 37ed615c56cef4e46a6e18476a30a87d, type: 2}
 --- !u!1 &3387770433976280584
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,7 +128,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3387770433976280631
 Transform:
   m_ObjectHideFlags: 0
@@ -136,7 +138,7 @@ Transform:
   m_GameObject: {fileID: 3387770433976280584}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5038, y: 1.0746156, z: 1.5038}
+  m_LocalScale: {x: 0.5866625, y: 0.41922903, z: 0.5866625}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3387770433160942574}
