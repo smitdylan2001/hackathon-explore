@@ -32,6 +32,7 @@ public class PlayerScripts : MonoBehaviour
         {
             Debug.DrawRay(transform.position, transform.forward * 30f, Color.green);
         }
+
     }
 
     private void OnTriggerStay(Collider other)

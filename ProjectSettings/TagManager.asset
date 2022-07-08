@@ -7,6 +7,7 @@ TagManager:
   - Minigame2
   - Minigame3
   - Minigame4
+  - Laser
   layers:
   - Default
   - TransparentFX

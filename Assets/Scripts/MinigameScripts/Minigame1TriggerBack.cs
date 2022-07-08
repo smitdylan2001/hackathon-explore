@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class Minigame1TriggerBack : MonoBehaviour
 {
-
+    public static bool HasEnteredHoop;
     public GameObject MinigamePrefab;
+
+    private void Start()
+    {
+        HasEnteredHoop = false;
+    }
 
 
     private void OnTriggerEnter(Collider other)
@@ -14,8 +19,11 @@ public class Minigame1TriggerBack : MonoBehaviour
         if (Minigame1TriggerFront.hasEnteredHoop == true)
         {
             GameManager.Instance.IncreaseScore();
-            //Minigame1TriggerFront.hasEnteredHoop = false;
             Destroy(MinigamePrefab);
+        }
+        else
+        {
+            HasEnteredHoop = true;
         }
     }
 }

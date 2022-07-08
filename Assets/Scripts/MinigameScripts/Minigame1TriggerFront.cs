@@ -6,25 +6,26 @@ public class Minigame1TriggerFront : MonoBehaviour
 {
 
     public static bool hasEnteredHoop;
+    public GameObject MinigamePrefab;
 
     private void Start()
     {
         hasEnteredHoop = false;
     }
 
-    private void Update()
-    {
-        //Debug.Log("I have entered Hoop" + hasEnteredHoop);
-    }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("I have entered FRONT Hoop" + hasEnteredHoop);
-        hasEnteredHoop = true;
+        Debug.Log("I have entered BACK Hoop" + Minigame1TriggerBack.HasEnteredHoop);
+        if (Minigame1TriggerBack.HasEnteredHoop == true)
+        {
+            GameManager.Instance.IncreaseScore();
+            Destroy(MinigamePrefab);
+        }
+        else
+        {
+            hasEnteredHoop = true;
+        }
     }
 
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    hasEnteredHoop = false;
-    //}
 }
