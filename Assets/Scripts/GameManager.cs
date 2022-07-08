@@ -5,33 +5,35 @@ using TMPro;
 using UnityEngine.UI;
 using Niantic.ARDK.AR;
 using Niantic.ARDK.AR.Configuration;
+using System.Threading.Tasks;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    public bool MinigameActive {get; private set;}
+    public bool MinigameActive { get; private set; }
 
-    [SerializeField] private GameObject[] _minigameObjects;
-    [SerializeField] private GameObject _completedPrefab;
-    [SerializeField] private TextMeshProUGUI _scoreText, _timerText, _instructionText, _promptText;
+    [SerializeField] private GameObject[] _minigameObjects, _objectsToDisableAtGameOver;
+    [SerializeField] private GameObject _completedPrefab, _timerIncreaseObject, _gameOverObject;
+    [SerializeField] private RectTransform _walkingIcon, _walkingIconEnd, _gameIcon, _distanceTransform;
+    [SerializeField] private TextMeshProUGUI _scoreText, _timerText, _instructionText, _promptText, _endScore;
     [SerializeField] private int _startingSeconds = 60;
     [SerializeField] private float _minDistance = 20;
+    [SerializeField] private string _gameInstruction = "Complete Minigame: ", _searchInstruction = "Find: ";
 
     private int _score = 0;
     private float _secondsLeft;
     private Transform _cameraTransform;
     private LayerDetection _layerDetection;
+    private Vector2 _startPos, _endPos;
 
     private List<Vector3> previousPositions = new List<Vector3>();
 
-    [SerializeField] RectTransform _distanceTransform;
     float _distanceOffset;
     Image _offsetImage;
     [SerializeField] Image _targetImage;
 
     Vector3 _lastMinigamePos;
-
-    
 
     void Awake()
     {
@@ -46,9 +48,10 @@ public class GameManager : MonoBehaviour
         _layerDetection = FindObjectOfType<LayerDetection>();
         _distanceOffset = _distanceTransform.localScale.y;
         _offsetImage = _distanceTransform.GetComponentInChildren<Image>();
-
-
-
+        _startPos = _walkingIcon.position;
+        _endPos = _walkingIconEnd.position;
+        _gameIcon.gameObject.SetActive(false);
+        _timerIncreaseObject.SetActive(false);
     }
     void FixedUpdate()
     {
@@ -56,8 +59,13 @@ public class GameManager : MonoBehaviour
 
         if(_secondsLeft <= 0)
         {
-            //GameOver
             _secondsLeft = 0;
+            _gameOverObject.SetActive(true);
+            _endScore.text = _score.ToString();
+            foreach (var go in _objectsToDisableAtGameOver) go.SetActive(false);
+            GetComponent<LayerDetection>().enabled = false;
+            enabled = false;
+
             UpdateTimer();
             return;
         }
@@ -88,12 +96,14 @@ public class GameManager : MonoBehaviour
 
         _offsetImage.color = Color.Lerp(Color.red, Color.green, distancePercent);
 
+        _walkingIcon.position = (distancePercent * (_endPos - _startPos)) + _startPos;
+
         if(distancePercent > 0.99)
         {
             //Enable green checkmark
         }
     }
-    public void IncreaseScore(int amount = 1)
+    public async void IncreaseScore(int amount = 1)
     {
         MinigameActive = false;
         _score += amount;
@@ -102,9 +112,14 @@ public class GameManager : MonoBehaviour
 
         //Show high line with time completed?
 
-        AddTime(60);
         UpdateScore();
         SpawnCompletedNote();
+        _timerIncreaseObject.SetActive(false);
+        _timerIncreaseObject.SetActive(true);
+
+        await Task.Delay(700);
+
+        AddTime(60);
     }
 
     private void AddTime(int seconds)
@@ -126,7 +141,7 @@ public class GameManager : MonoBehaviour
         _timerText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
     }
 
-    public void spawnMinigame(Vector3 position)
+    public void SpawnMinigame(Vector3 position)
     {
         if (MinigameActive) return;
 
@@ -155,6 +170,10 @@ public class GameManager : MonoBehaviour
         _lastMinigamePos = position;
 
         MinigameActive = true;
+
+        SetInstruction(_gameInstruction);
+        _gameIcon.gameObject.SetActive(true);
+        _walkingIcon.gameObject.SetActive(false);
     }
 
     private void SpawnCompletedNote()
@@ -182,10 +201,18 @@ public class GameManager : MonoBehaviour
     {
         _promptText.text = text;
         _targetImage.sprite = sprite;
+        SetInstruction(_searchInstruction);
+        _gameIcon.gameObject.SetActive(false);
+        _walkingIcon.gameObject.SetActive(true);
     }
 
     public void SetInstruction(string text)
     {
         _instructionText.text = text;
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

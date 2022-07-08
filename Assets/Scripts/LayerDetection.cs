@@ -92,7 +92,7 @@ public class LayerDetection : MonoBehaviour
                 Debug.Log(i);
                 if(i == _currentLayer.LayerType.ToString())
                 {
-                    GameManager.Instance.spawnMinigame(_camera.transform.position +
+                    GameManager.Instance.SpawnMinigame(_camera.transform.position +
                                             (2 * new Vector3(_camera.transform.forward.x, 0, _camera.transform.forward.z)));
 
                     //var results =
