@@ -62,7 +62,7 @@ public class PlayerScripts : MonoBehaviour
 
     async void DestroyGameObject(GameObject balloon)
     {
-        await Task.Delay(300);
+        await Task.Delay(230);
         if (balloon)
         {
             Destroy(balloon);

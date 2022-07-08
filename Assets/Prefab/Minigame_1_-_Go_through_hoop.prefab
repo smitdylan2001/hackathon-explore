@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ce4992e5c0484b428d2c0763f833e90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinigamePrefab: {fileID: 0}
+  MinigamePrefab: {fileID: 1487604652411025621}
 --- !u!65 &5129586196789212107
 BoxCollider:
   m_ObjectHideFlags: 0
