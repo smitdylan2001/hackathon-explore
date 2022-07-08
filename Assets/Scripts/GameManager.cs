@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _scoreText, _timerText, _instructionText, _promptText, _endScore;
     [SerializeField] private int _startingSeconds = 60;
     [SerializeField] private float _minDistance = 20;
-    [SerializeField] private string _gameInstruction = "Complete Minigame: ", _searchInstruction = "Find: ";
+    [SerializeField] private string _gameInstruction = "Minigame: ", _searchInstruction = "Find: ";
     [SerializeField] private Image _completedIcon;
 
     private int _score = 0;
@@ -179,6 +179,7 @@ public class GameManager : MonoBehaviour
         MinigameActive = true;
 
         SetInstruction(_gameInstruction);
+        SetPrompt(go.GetComponent<MiniExplanation>().MinigameInfo, null);
         _gameIcon.gameObject.SetActive(true);
         _walkingIcon.gameObject.SetActive(false);
     }
@@ -207,8 +208,11 @@ public class GameManager : MonoBehaviour
     public void SetPrompt(string text, Sprite sprite)
     {
         _promptText.text = text;
-        _targetImage.sprite = sprite;
-        SetInstruction(_searchInstruction);
+        if(sprite)
+        {
+            _targetImage.sprite = sprite;
+            SetInstruction(_searchInstruction);
+        }
         _gameIcon.gameObject.SetActive(false);
         _walkingIcon.gameObject.SetActive(true);
     }

@@ -1119,7 +1119,7 @@ MonoBehaviour:
   _endScore: {fileID: 246558812}
   _startingSeconds: 90
   _minDistance: 15
-  _gameInstruction: 'Complete Minigame: '
+  _gameInstruction: 'Minigame: '
   _searchInstruction: 'Find: '
   _completedIcon: {fileID: 1559565373}
   _targetImage: {fileID: 247219350}
