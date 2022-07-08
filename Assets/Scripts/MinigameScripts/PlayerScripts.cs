@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class PlayerScripts : MonoBehaviour
@@ -26,7 +27,7 @@ public class PlayerScripts : MonoBehaviour
         {
             Debug.Log("I hit something");
             Debug.DrawRay(transform.position, transform.forward * hitCheck.distance, Color.red);
-            Destroy(hitCheck.transform.gameObject);
+            DestroyGameObject(hitCheck.transform.gameObject);
         }
         else
         {
@@ -57,15 +58,16 @@ public class PlayerScripts : MonoBehaviour
         }
 
 
-        if (isHoldingObject)
-        {
-            //other.transform.parent = this.gameObject.transform;
-        }
-        else
-        {
-            //other.transform.parent = realParent.transform;
-        }
+    }
 
+    async void DestroyGameObject(GameObject balloon)
+    {
+        await Task.Delay(300);
+        if (balloon)
+        {
+            Destroy(balloon);
+        }
 
     }
+
 }

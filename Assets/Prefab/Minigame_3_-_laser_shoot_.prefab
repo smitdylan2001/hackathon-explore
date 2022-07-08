@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3890207989941387293}
   - component: {fileID: 3890207989941387292}
   - component: {fileID: 2665938151667416216}
+  - component: {fileID: 4059040720895521442}
   m_Layer: 0
   m_Name: Minigame_3_-_laser_shoot_
   m_TagString: Untagged
@@ -63,6 +64,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Laser: {fileID: 8252718113705139095}
+--- !u!114 &4059040720895521442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3890207989941387290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc3e3806e9b66494192f297cce59fd9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MinigameInfo: 
 --- !u!1001 &5456672458381221788
 PrefabInstance:
   m_ObjectHideFlags: 0
