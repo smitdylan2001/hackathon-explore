@@ -19,7 +19,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _scoreText, _timerText, _instructionText, _promptText, _endScore;
     [SerializeField] private int _startingSeconds = 60;
     [SerializeField] private float _minDistance = 20;
-    [SerializeField] private string _gameInstruction = "Complete Minigame: ", _searchInstruction = "Find: ";
+    [SerializeField] private string _gameInstruction = "Minigame: ", _searchInstruction = "Find: ";
+    [SerializeField] private Image _completedIcon;
 
     private int _score = 0;
     private float _secondsLeft;
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Image _targetImage;
 
     Vector3 _lastMinigamePos;
+
 
     void Awake()
     {
@@ -97,10 +99,14 @@ public class GameManager : MonoBehaviour
         _offsetImage.color = Color.Lerp(Color.red, Color.green, distancePercent);
 
         _walkingIcon.position = (distancePercent * (_endPos - _startPos)) + _startPos;
-
-        if(distancePercent > 0.99)
+        if (_walkingIcon.position.x > _endPos.x) _walkingIcon.position = _endPos;
+        if (distancePercent > 0.98)
         {
-            //Enable green checkmark
+            _completedIcon.gameObject.SetActive(true);
+        }
+        else
+        {
+            _completedIcon.gameObject.SetActive(false);
         }
     }
     public async void IncreaseScore(int amount = 1)
@@ -116,6 +122,7 @@ public class GameManager : MonoBehaviour
         SpawnCompletedNote();
         _timerIncreaseObject.SetActive(false);
         _timerIncreaseObject.SetActive(true);
+        _completedIcon.gameObject.SetActive(false);
 
         await Task.Delay(700);
 
@@ -151,7 +158,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if (GetMinimumDistance() < _minDistance)
+        if (GetMinimumDistance() < _minDistance * 0.96)
         {
 
             Debug.Log("too close");
@@ -172,6 +179,7 @@ public class GameManager : MonoBehaviour
         MinigameActive = true;
 
         SetInstruction(_gameInstruction);
+        SetPrompt(go.GetComponent<MiniExplanation>().MinigameInfo, null);
         _gameIcon.gameObject.SetActive(true);
         _walkingIcon.gameObject.SetActive(false);
     }
@@ -200,8 +208,11 @@ public class GameManager : MonoBehaviour
     public void SetPrompt(string text, Sprite sprite)
     {
         _promptText.text = text;
-        _targetImage.sprite = sprite;
-        SetInstruction(_searchInstruction);
+        if(sprite)
+        {
+            _targetImage.sprite = sprite;
+            SetInstruction(_searchInstruction);
+        }
         _gameIcon.gameObject.SetActive(false);
         _walkingIcon.gameObject.SetActive(true);
     }

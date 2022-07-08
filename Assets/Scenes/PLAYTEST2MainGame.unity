@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -529,7 +529,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &708785986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1010,18 +1010,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _minigameObjects:
-  - {fileID: 1487604652411025621, guid: 7d353d1126d933043bcea8776c52542a, type: 3}
-  - {fileID: 3387770433976280584, guid: fe47b8b791c571145ad8467a59602e75, type: 3}
   - {fileID: 3890207989941387290, guid: b8bc4b415d80aab479ede8a7b30b9cd1, type: 3}
+  - {fileID: 3890207989941387290, guid: b8bc4b415d80aab479ede8a7b30b9cd1, type: 3}
+  - {fileID: 3890207989941387290, guid: b8bc4b415d80aab479ede8a7b30b9cd1, type: 3}
+  _objectsToDisableAtGameOver: []
   _completedPrefab: {fileID: 136381442310811197, guid: 337c059f0aa1f19499f6d4eb02a135eb,
     type: 3}
+  _timerIncreaseObject: {fileID: 0}
+  _gameOverObject: {fileID: 0}
+  _walkingIcon: {fileID: 0}
+  _walkingIconEnd: {fileID: 0}
+  _gameIcon: {fileID: 0}
+  _distanceTransform: {fileID: 485052983}
   _scoreText: {fileID: 442213507}
   _timerText: {fileID: 2140059253}
   _instructionText: {fileID: 276097838}
   _promptText: {fileID: 1979891219}
+  _endScore: {fileID: 0}
   _startingSeconds: 90
   _minDistance: 15
-  _distanceTransform: {fileID: 485052983}
+  _gameInstruction: 'Complete Minigame: '
+  _searchInstruction: 'Find: '
   _targetImage: {fileID: 247219350}
 --- !u!4 &1795179872
 Transform:
