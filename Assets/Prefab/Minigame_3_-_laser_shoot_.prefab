@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc3e3806e9b66494192f297cce59fd9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinigameInfo: 
+  MinigameInfo: Pop Balloons
 --- !u!1001 &5456672458381221788
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -112,7 +112,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: f489e175f13cb3e49b0800238159ce82,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.544
+      value: -0.86399996
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f489e175f13cb3e49b0800238159ce82,
         type: 3}
@@ -226,7 +226,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: f489e175f13cb3e49b0800238159ce82,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.78
+      value: 0.62
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f489e175f13cb3e49b0800238159ce82,
         type: 3}
@@ -426,7 +426,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: f489e175f13cb3e49b0800238159ce82,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.544
+      value: -0.86399996
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f489e175f13cb3e49b0800238159ce82,
         type: 3}

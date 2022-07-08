@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc3e3806e9b66494192f297cce59fd9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinigameInfo: 
+  MinigameInfo: Go Through Hoop
 --- !u!1 &1798738634551559848
 GameObject:
   m_ObjectHideFlags: 0
