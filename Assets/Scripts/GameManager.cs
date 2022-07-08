@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Niantic.ARDK.AR;
+using Niantic.ARDK.AR.Configuration;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,8 +13,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject[] _minigameObjects;
     [SerializeField] private GameObject _completedPrefab;
-    [SerializeField] private TextMeshProUGUI _scoreText;
-    [SerializeField] private TextMeshProUGUI _timerText;
+    [SerializeField] private TextMeshProUGUI _scoreText, _timerText, _instructionText, _promptText;
     [SerializeField] private int _startingSeconds = 60;
     [SerializeField] private float _minDistance = 20;
 
@@ -26,8 +27,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] RectTransform _distanceTransform;
     float _distanceOffset;
     Image _offsetImage;
+    [SerializeField] Image _targetImage;
 
     Vector3 _lastMinigamePos;
+
+    
+
     void Awake()
     {
         Instance = this;
@@ -41,8 +46,10 @@ public class GameManager : MonoBehaviour
         _layerDetection = FindObjectOfType<LayerDetection>();
         _distanceOffset = _distanceTransform.localScale.y;
         _offsetImage = _distanceTransform.GetComponentInChildren<Image>();
-    }
 
+
+
+    }
     void FixedUpdate()
     {
         _secondsLeft -= Time.fixedDeltaTime;
@@ -169,5 +176,16 @@ public class GameManager : MonoBehaviour
         }
 
         return minDistance;
+    }
+
+    public void SetPrompt(string text, Sprite sprite)
+    {
+        _promptText.text = text;
+        _targetImage.sprite = sprite;
+    }
+
+    public void SetInstruction(string text)
+    {
+        _instructionText.text = text;
     }
 }

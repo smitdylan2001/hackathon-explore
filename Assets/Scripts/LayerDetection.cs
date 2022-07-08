@@ -15,8 +15,8 @@ using Niantic.ARDK.Extensions;
 using Niantic.ARDK.Utilities.Input.Legacy;
 using UnityEngine.UI;
 using TMPro;
+using Niantic.ARDK.AR.HitTest;
 
-[System.Flags]
 public enum LayerTypes
 {
     ground,
@@ -28,22 +28,48 @@ public enum LayerTypes
     foliage,
     sky,
 }
+
+[System.Serializable]
+public struct LayerCombinations
+{
+    public LayerTypes LayerType;
+    public string LayerName;
+    public Sprite Sprite;
+}
+
 public class LayerDetection : MonoBehaviour
 {
-    string[] _layerTypes = { "ground", "water", "artificial_ground", "building", "foliage" };
-    string _currentLayer;
+    [SerializeField] LayerCombinations[] _layerTypes;
+
+
+    LayerCombinations _currentLayer;
 
     ISemanticBuffer _currentBuffer;
 
     public ARSemanticSegmentationManager _semanticManager;
     public Camera _camera;
+    IARSession _arSession;
+
+    Dictionary<string, Sprite> _spriteDict = new Dictionary<string, Sprite>();
     void Start()
     {
         //add a callback for catching the updated semantic buffer
         _semanticManager.SemanticBufferUpdated += OnSemanticsBufferUpdated;
-        _currentLayer = GetRandomLayer(false);
-    }
+        GotoNextLayer(false);
 
+        ARSessionFactory.SessionInitialized += RunARSession;
+    }
+    void RunARSession(AnyARSessionInitializedArgs args)
+    {
+        //_arSession = args.Session;
+        //var config = ARWorldTrackingConfigurationFactory.Create();
+
+        //// Set to value other than PlaneDetection.None to enable
+        //// hit tests against detected planes
+        //config.PlaneDetection = PlaneDetection.Horizontal;
+
+        //_arSession.Run(config);
+    }
     private void OnSemanticsBufferUpdated(ContextAwarenessStreamUpdatedArgs<ISemanticBuffer> args)
     {
         //get the current buffer
@@ -61,33 +87,53 @@ public class LayerDetection : MonoBehaviour
             int x = (int)touch.position.x;
             int y = (int)touch.position.y;
 
-            //return the names
-            string[] channelsNamesInPixel = _semanticManager.SemanticBufferProcessor.GetChannelNamesAt(x, y);
-
-            //print them to console
-            foreach (var i in channelsNamesInPixel)
+            foreach (var i in _semanticManager.SemanticBufferProcessor.GetChannelNamesAt(x, y))
             {
                 Debug.Log(i);
-                if(i == _currentLayer)
+                if(i == _currentLayer.LayerType.ToString())
                 {
-                    GameManager.Instance.spawnMinigame(_camera.transform.position + (2 * new Vector3(_camera.transform.forward.x, 0, _camera.transform.forward.z)));
+                    GameManager.Instance.spawnMinigame(_camera.transform.position +
+                                            (2 * new Vector3(_camera.transform.forward.x, 0, _camera.transform.forward.z)));
+
+                    //var results =
+                    //        _arSession.CurrentFrame.HitTest
+                    //        (
+                    //            _camera.pixelWidth,
+                    //            _camera.pixelHeight,
+                    //            touch.position,
+                    //            ARHitTestResultType.All
+                    //        );
+
+                    //if (results.Count == 0)
+                    //    return;
+
+                    //var closestHit = results[0];
+                    //var position = closestHit.WorldTransform.ToPosition();
+
+                    //if(Vector3.Distance(position, _camera.transform.position) < 5)
+                    //{
+                    //    GameManager.Instance.spawnMinigame(_camera.transform.position + 
+                    //                        (2 * new Vector3(_camera.transform.forward.x, 0, _camera.transform.forward.z)));
+                    //}
+
                 }
             }
         }
 
     }
 
-    public void GotoNextLayer()
+    public void GotoNextLayer(bool notCurrent = true)
     {
-        _currentLayer = GetRandomLayer();
+        _currentLayer = GetRandomLayer(notCurrent);
+        GameManager.Instance.SetPrompt(_currentLayer.LayerName, _currentLayer.Sprite);
     }
 
-    private string GetRandomLayer(bool notCurrent = true)
+    private LayerCombinations GetRandomLayer(bool notCurrent = true)
     {
         var layer = _layerTypes[Random.Range(0, _layerTypes.Length)];
-        if (notCurrent && layer == _currentLayer) layer = GetRandomLayer();
+        if (notCurrent && layer.LayerType == _currentLayer.LayerType) layer = GetRandomLayer();
 
-        Debug.Log(layer);
+        Debug.Log(layer.LayerName);
 
         return layer;
     }

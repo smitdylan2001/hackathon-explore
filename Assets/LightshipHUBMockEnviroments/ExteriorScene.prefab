@@ -1016,7 +1016,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f16534bb6007474a91d7b492b09b52c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Channel: 1
+  Channel: 6
 --- !u!1 &1549540097389120245 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8448179263845022091, guid: 0bcecf4e5533247839a22e7c904aed34,
