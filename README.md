@@ -1,7 +1,7 @@
 # Scout around
 Niantic and Lenslist hackathon with AR
 
-Scout Around is an AR game made in a week by 3 students.
+Scout Around is an AR game made in 4 days by 3 students.
 
 The goal of the game is to go outside, explore your surroundings, and have fun!
 
