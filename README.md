@@ -5,6 +5,8 @@ Scout Around is an AR game made in a week by 3 students.
 
 The goal of the game is to go outside, explore your surroundings, and have fun!
 
+Trailer: https://youtu.be/562_hORgBRM
+
 Currently only for Android
 
 
