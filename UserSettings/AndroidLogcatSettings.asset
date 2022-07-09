@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "QV710DWB3F",
         "name": "com.DevDunk.ScoutAround",
-        "processId": 9025,
+        "processId": 23337,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -48,6 +48,24 @@
             "deviceId": "QV710DWB3F",
             "name": "com.DevDunk.ScoutAround",
             "processId": 9025,
+            "exited": false
+        },
+        {
+            "deviceId": "QV710DWB3F",
+            "name": "com.DevDunk.ScoutAround",
+            "processId": 24739,
+            "exited": false
+        },
+        {
+            "deviceId": "QV710DWB3F",
+            "name": "com.DevDunk.ScoutAround",
+            "processId": 13105,
+            "exited": false
+        },
+        {
+            "deviceId": "QV710DWB3F",
+            "name": "com.DevDunk.ScoutAround",
+            "processId": 23337,
             "exited": false
         }
     ],
