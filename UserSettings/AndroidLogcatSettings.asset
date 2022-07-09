@@ -2,8 +2,8 @@
     "m_SelectedDeviceId": "QV710DWB3F",
     "m_SelectedPackage": {
         "deviceId": "QV710DWB3F",
-        "name": "com.DevDunk.HackathonNiantic",
-        "processId": 20670,
+        "name": "com.DevDunk.ScoutAround",
+        "processId": 9025,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -30,6 +30,24 @@
             "deviceId": "QV710DWB3F",
             "name": "com.DevDunk.HackathonNiantic",
             "processId": 20670,
+            "exited": false
+        },
+        {
+            "deviceId": "QV710DWB3F",
+            "name": "com.DevDunk.HackathonNiantic",
+            "processId": 7128,
+            "exited": false
+        },
+        {
+            "deviceId": "QV710DWB3F",
+            "name": "com.DevDunk.ScoutAround",
+            "processId": 10802,
+            "exited": false
+        },
+        {
+            "deviceId": "QV710DWB3F",
+            "name": "com.DevDunk.ScoutAround",
+            "processId": 9025,
             "exited": false
         }
     ],

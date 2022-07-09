@@ -19,9 +19,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private RectTransform _walkingIcon, _walkingIconEnd, _gameIcon, _distanceTransform;
     [SerializeField] private TextMeshProUGUI _scoreText, _timerText, _instructionText, _promptText, _endScore;
     [SerializeField] private int _startingSeconds = 60;
-    [SerializeField] private float _minDistance = 20;
+    [SerializeField] private float _minDistance = 30;
     [SerializeField] private string _gameInstruction = "Minigame: ", _searchInstruction = "Find: ";
     [SerializeField] private Image _completedIcon;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _spawnAudio, _winAudio, _failAudio;
 
     private int _score = 0;
     private float _secondsLeft;
@@ -37,10 +39,12 @@ public class GameManager : MonoBehaviour
 
     Vector3 _lastMinigamePos;
     Light _light;
-
+    IARSession _session;
     void Awake()
     {
         Instance = this;
+        _gameIcon.gameObject.SetActive(false);
+        _timerIncreaseObject.SetActive(false);
     }
 
     private void Start()
@@ -53,15 +57,13 @@ public class GameManager : MonoBehaviour
         _offsetImage = _distanceTransform.GetComponentInChildren<Image>();
         _startPos = _walkingIcon.position;
         _endPos = _walkingIconEnd.position;
-        _gameIcon.gameObject.SetActive(false);
-        _timerIncreaseObject.SetActive(false);
         _light = GameObject.FindObjectOfType<Light>();
         ARSessionFactory.SessionInitialized += OnAnyARSessionDidInitialize;
     }
 
     private void OnAnyARSessionDidInitialize(AnyARSessionInitializedArgs args)
     {
-        var _session = args.Session;
+        _session = args.Session;
         _session.FrameUpdated += UpdateLighting;
     }
 
@@ -74,15 +76,22 @@ public class GameManager : MonoBehaviour
         else if (Application.platform == RuntimePlatform.IPhonePlayer) _light.color = Mathf.CorrelatedColorTemperatureToRGB(light.AmbientColorTemperature);
         else Debug.LogWarning("No platform match, platform is " + Application.platform);
     }
+
+    private void OnDestroy()
+    {
+        _session.FrameUpdated -= UpdateLighting;
+    }
     void FixedUpdate()
     {
-        _secondsLeft -= Time.fixedDeltaTime;
+        _secondsLeft -= Time.fixedDeltaTime *1.02f;
 
         if(_secondsLeft <= 0)
         {
             _secondsLeft = 0;
             _gameOverObject.SetActive(true);
             _endScore.text = _score.ToString();
+            PlaySFX(_failAudio);
+
             foreach (var go in _objectsToDisableAtGameOver) go.SetActive(false);
             GetComponent<LayerDetection>().enabled = false;
             enabled = false;
@@ -128,7 +137,7 @@ public class GameManager : MonoBehaviour
             _completedIcon.gameObject.SetActive(false);
         }
     }
-    public void IncreaseScore(int amount = 1)
+    public async void IncreaseScore(int amount = 1)
     {
         MinigameActive = false;
         _score += amount;
@@ -142,10 +151,12 @@ public class GameManager : MonoBehaviour
         _timerIncreaseObject.SetActive(false);
         _timerIncreaseObject.SetActive(true);
         _completedIcon.gameObject.SetActive(false);
-        _minDistance++;
-        //await Task.Delay(700);
+        _minDistance *= 1.04f;
+        await Task.Delay(700);
 
         AddTime(60);
+
+        PlaySFX(_winAudio);
     }
 
     private void AddTime(int seconds)
@@ -201,6 +212,8 @@ public class GameManager : MonoBehaviour
         SetPrompt(go.GetComponent<MiniExplanation>().MinigameInfo, null);
         _gameIcon.gameObject.SetActive(true);
         _walkingIcon.gameObject.SetActive(false);
+
+        PlaySFX(_spawnAudio);
     }
 
     private void SpawnCompletedNote()
@@ -244,5 +257,12 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void PlaySFX(AudioClip clip)
+    {
+        _audioSource.Stop();
+        _audioSource.clip = clip;
+        _audioSource.Play();
     }
 }
