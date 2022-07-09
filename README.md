@@ -1,5 +1,7 @@
 # Scout around
-Niantic and Lenslist hackathon with AR
+Niantic and Lenslist hackathon with AR.
+
+It uses Lightship ARDK for Realtime meshing, depth occlusion, 6DoF AR features and Semantic Segmentation
 
 Scout Around is an AR game made in 4 days by 3 students.
 
